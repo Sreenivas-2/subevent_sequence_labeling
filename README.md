@@ -23,6 +23,21 @@ There are two directories (one for the word-level model and one the tweet-level 
 ```
 ./run_<name_of_the_model>.sh
 ```
+## Input Format
+Sample Input
+```
+"{'corrected_tags': 'B-century', 'event_type': 'century', 'event_id': 0, 'doc': 'mi vs srh' }"
+12:00	"['ipl', 'rohit', 'hit', 'a', 'century']"
+12:00	"['cricket', 'match', 'cancelled', 'due', 'to', 'rain']"
+"{'corrected_tags': 'B-MOM', 'event_type': 'MOM', 'event_id': 1, 'doc': 'csk vs rcb'}"
+12:01	"['ipl', 'csk', 'vs', 'rcb']"
+12:01	"['dhoni', 'dhoni', 'is', 'MOM']"
+"{'corrected_tags': 'B-won', 'event_type': 'won', 'event_id': 2, 'doc': 'mi vs csk'}"
+12:02	"['dhoni', 'dhoni', 'won', 'for', 'team']"
+12:02	"['dhoni', 'dhoni', 'won', 'for', 'team']"
+
+```
+Here input has two columns time and text separated with '\t'. As the above sample input it should be divided into bins and accordingly the first row has the ground truth values.
 
 ## Notes
 
