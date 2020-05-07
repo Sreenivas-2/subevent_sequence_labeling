@@ -33,13 +33,13 @@ num_lstm_layers         = 1
 
 
 # pretrained embeddings
-pretrained_embeddings   =False
-filename_embeddings     ="../../../twitter_data/glove_embeddings/glove.twitter.27B.25d.txt"
+pretrained_embeddings   = False
+filename_embeddings     = "../../../twitter_data/glove_embeddings/glove.twitter.27B.25d.txt"
 
-embeddings_size        =25 # when pretrained =False
+embeddings_size        = 25 # when pretrained =False
 
 # dataset
-filename_dev            = "../../../outputs/final_tokenized_with_dev/dev_nrt_d1_tokenized_final.txt"
-filename_test           = "../../../outputs/final_tokenized_with_dev/test_nrt_d1_tokenized_final.txt"
-filename_train          = "../../../outputs/final_tokenized_with_dev/train_nrt_d1_tokenized_final.txt"
+filename_dev            = "/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/CODE/subevent_sequence_labeling-master/tweet_tagger/inputs/dev.csv"
+filename_test           = "/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/CODE/subevent_sequence_labeling-master/tweet_tagger/inputs/test.csv"
+filename_train          = "/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/CODE/subevent_sequence_labeling-master/tweet_tagger/inputs/train.csv"
 
