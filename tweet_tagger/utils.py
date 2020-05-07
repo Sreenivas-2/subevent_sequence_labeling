@@ -15,7 +15,7 @@ def thresholdedEventPredictions(threshold,tag_scores):
     for labelIdx in range(len(predicted_labels)):
             label=predicted_labels[labelIdx].item()
             score=predicted_scores[labelIdx].item()
-            #print (label)
+            print ('---',label)
             #print (score)
 
             if label==1 and score>threshold:
@@ -25,6 +25,7 @@ def thresholdedEventPredictions(threshold,tag_scores):
     mlabels=torch.tensor(mlabels, dtype=torch.long)
     
     return mlabels
+    
 def appendToFile(filename,line):
     with open(filename, 'a') as the_file:
         the_file.write(line+'\n')
@@ -123,6 +124,9 @@ def getEmbeddingId(word, embeddingsList):
         return curIndex
 
 def strToLst(string):
+    # print(string)
+    # node = ast.parse(string, mode = 'eval')
+    # return node.body
     return ast.literal_eval(string)
 
 

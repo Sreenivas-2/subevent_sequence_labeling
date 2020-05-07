@@ -1,7 +1,8 @@
 import os
 import utils
 import parsers
-from sklearn.externals import joblib
+# from sklearn.externals import joblib
+import joblib
 import os.path
 import reader
 from torch.utils.data import Dataset, DataLoader
@@ -47,6 +48,7 @@ class build_data():
 
 
 
+
         self.filename_train=config_file.getProperty("filename_train")
         self.filename_dev = config_file.getProperty("filename_dev")
         self.filename_test=config_file.getProperty("filename_test")
@@ -69,6 +71,7 @@ class build_data():
             train = joblib.load(self.filename_train+name_of_embeddings+"_"+str(self.pad_length)+  "_tweet.pkl")  # loading is faster
 
         self.word_to_ix, self.tag_to_ix, self.event_to_ix, self.ec_to_ix = train.getDictionaries()
+
         
 
         if os.path.isfile(self.filename_dev +name_of_embeddings+"_"+str(self.pad_length)+   "_tweet.pkl") == False:
@@ -79,6 +82,7 @@ class build_data():
 
         else:
             dev = joblib.load(self.filename_dev +name_of_embeddings+"_"+str(self.pad_length)+   "_tweet.pkl")  # loading is faster
+
 
 
 
@@ -93,9 +97,11 @@ class build_data():
         
 
         
-        print (train)
+        # print ('-',train)
 
         self.train_loader = DataLoader(train, batch_size=1, shuffle=False)
+        for i, data in enumerate(self.train_loader):
+            print(data)
         self.dev_loader = DataLoader(dev, batch_size=1, shuffle=False)
         self.test_loader = DataLoader(test, batch_size=1, shuffle=False)
 

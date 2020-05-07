@@ -66,7 +66,8 @@ class LSTMTagger(nn.Module):
         self.attention_weights2 = nn.Parameter(torch.FloatTensor(self.config.embeddings_size))
         self.softmax3 = nn.Softmax(dim=-1)
 
-        nn.init.uniform(self.attention_weights2.data, -0.005, 0.005)                                                            
+        nn.init.uniform_(self.attention_weights2.data, -0.005, 0.005)
+
     def sort_batch(self,X,  lengths):
         lengths, indx = lengths.sort(dim=0, descending=True)
 
@@ -90,7 +91,7 @@ class LSTMTagger(nn.Module):
             
             bin_tweets = bin[0]
             
-            bin_tweets=bin_tweets.to('cuda')
+            # bin_tweets=bin_tweets.to('cuda')
             
             bin_tweets=bin_tweets.squeeze(0)
            
@@ -102,11 +103,12 @@ class LSTMTagger(nn.Module):
             ec_independent_targets.extend(bin[5]) #(0,1,2,3,4) without duration  0000111110000222220000
             ec_independent_event_ids.extend(bin[6]) #(-1,0,1,2,3,4) without duration  -1-1-1-100000-1-1-1-111111-1-1-1-1
 
-            tweets_length= torch.stack(bin[7]).to('cuda')
+            # tweets_length= torch.stack(bin[7]).to('cuda')
+            tweets_length= torch.stack(bin[7])
 
             tweets_length=tweets_length.squeeze(1)
-           
 
+            # print(tweets_length.type())
             bin_tweets, tweets_length = self.sort_batch(bin_tweets, tweets_length)
 
             embeds = self.word_embeddings(bin_tweets).permute(1,0,2)
@@ -114,8 +116,10 @@ class LSTMTagger(nn.Module):
 
             if self.config.use_dropout == True:
                 embeds = self.dropoutEmbeddings(embeds)
-            
+
             embeds = pack_padded_sequence(embeds, tweets_length)  # unpad
+
+            embeds = embeds.to('cuda')
 
             if self.config.tweet_representation == "embeddings":
                 tweet_representation = embeds
@@ -130,7 +134,7 @@ class LSTMTagger(nn.Module):
                 tl_expanded=(tweets_length).unsqueeze(1)
 
                 avg_pool_byhand = torch.sum(tweet_representation, dim=0) / tl_expanded.to(
-                    dtype=torch.float)
+                    device = 'cuda',dtype=torch.float)
 
                 bin_representation = avg_pool_byhand
 
@@ -228,7 +232,7 @@ class LSTMTagger(nn.Module):
            
             lst_encodings.append(bin_features)
 
-        lst_encodings = torch.cat(lst_encodings)  # .to(self.device)
+        lst_encodings = torch.cat(lst_encodings).to('cpu')  # .to(self.device)
 
         if self.config.batch_norm==True:
 

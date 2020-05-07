@@ -18,13 +18,15 @@ from build_data import build_data
 
 
 torch.manual_seed(1)
-torch.set_default_tensor_type('torch.cuda.FloatTensor')
+# torch.cuda.set_device(0)
+torch.set_default_tensor_type('torch.FloatTensor')
 
 
 config=build_data(sys.argv[1])
 utils.printParameters(config)
 
-device='cuda:0'
+device='cpu'
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = nn_model.LSTMTagger(config,device).to(device)
 loss_function = nn.CrossEntropyLoss().to(device)
 optimizer = optim.Adam(model.parameters(), lr=config.learning_rate)
@@ -36,8 +38,8 @@ for epoch in range(config.nepochs):
         epoch_loss=0
         training_util.initializeEvaluator(epoch)
         model.train()
-        for i_batch, sample_batched in enumerate(config.train_loader):
-            
+        model.eval()
+        for i_batch, sample_batched in enumerate(config.train_loader):       
 
             model.zero_grad()
             tag_scores,bio_targets,ec_targets,event_duration_targets,independent_event_targets,ec_independent_targets,ec_independent_event_ids = model(sample_batched['match'])
@@ -56,9 +58,8 @@ for epoch in range(config.nepochs):
         print("Loss {}".format(epoch_loss))
         training_util.printInfo()
         
-        # See what the scores are after training
+        # See what the scores are after trainingprintInfo
         with torch.no_grad():
-        
             dev_util.initializeEvaluator(epoch)
             model.eval()
             
@@ -67,8 +68,7 @@ for epoch in range(config.nepochs):
                
                 tag_scores,bio_targets,ec_targets,event_duration_targets,independent_event_targets,ec_independent_targets,ec_independent_event_ids = model(sample_batched['match'])
 
-                dev_util.addTargets(tag_scores,bio_targets,ec_targets,independent_event_targets)   
-
+                dev_util.addTargets(tag_scores,bio_targets,ec_targets,independent_event_targets)
                 dev_util.predict(ec_independent_targets,ec_independent_event_ids,bio_targets)
 
         
@@ -86,7 +86,7 @@ for epoch in range(config.nepochs):
                
 
                 tag_scores,bio_targets,ec_targets,event_duration_targets,independent_event_targets,ec_independent_targets,ec_independent_event_ids = model(sample_batched['match'])
-                test_util.addTargets(tag_scores,bio_targets,ec_targets,independent_event_targets)   
+                test_util.addTargets(tag_scores,bio_targets,ec_targets,independent_event_targets)  
 
                 test_util.predict(ec_independent_targets,ec_independent_event_ids,bio_targets)
 

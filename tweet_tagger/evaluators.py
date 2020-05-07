@@ -168,6 +168,7 @@ def get_chunks(seq, tags):
         result = [("PER", 0, 2), ("LOC", 3, 4)]
     """
 
+    # print(tags)
     default = tags['O']
     idx_to_tag = {idx: tag for tag, idx in tags.items()}
     chunks = []

@@ -17,9 +17,11 @@ class BinDataset(Dataset):
                 on a sample.
         """
         # self.landmarks_frame = pd.read_csv(csv_file)
+
         col_vector = ['time', 'tweet']
         self.bin_df = pd.read_csv(tsv_file, names=col_vector, encoding="utf-8",
                                   engine='python', sep="\t")
+
         self.matches = []
         self.word_to_ix = word_to_ix
         self.tag_to_ix = tag_to_ix
@@ -32,13 +34,8 @@ class BinDataset(Dataset):
         self.ec_to_ix = utils.getSegmentationDict(self.ECset)
 
 
-
         if isTrain == True:
             self.createDics(self.bin_df,pretrained_embeddings)
-        #print(word_to_ix)
-        #print(self.tag_to_ix)
-        #print(self.ec_to_ix)
-        #print (self.event_to_ix)
 
         self.preprocess(self.bin_df)
 
@@ -47,7 +44,8 @@ class BinDataset(Dataset):
 
     def createDics(self, bin_dataframe,pretrained_embeddings):
 
-        bin_np = bin_dataframe.as_matrix()
+        # bin_np = bin_dataframe.as_matrix()
+        bin_np = bin_dataframe.to_numpy()
 
         if pretrained_embeddings==False: # maybe not need this!
 
@@ -66,7 +64,6 @@ class BinDataset(Dataset):
                 if pretrained_embeddings==True:
                     continue
                 else:
-
                     for word in utils.strToLst(line[1]):
                         if word not in self.word_to_ix:
                             self.word_to_ix[word] = len(self.word_to_ix)
@@ -83,7 +80,8 @@ class BinDataset(Dataset):
 
 
     def preprocess(self, bin_dataframe):
-        bin_np = bin_dataframe.as_matrix()
+        # bin_np = bin_dataframe.as_matrix()
+        bin_np = bin_dataframe.to_numpy()
         docNr = -1
 
         bin_tweets = []
@@ -119,7 +117,7 @@ class BinDataset(Dataset):
                         else:
                             ec_id=self.ec_to_ix[target]
                     except:
-                        print(target)
+                        # print(target)
                         if target.startswith("B-"):
                             tag_id = self.tag_to_ix["B-Other"]
 
@@ -149,14 +147,16 @@ class BinDataset(Dataset):
                 docNr += 1
                 if i != bin_np.shape[0] - 1:
                     infoDict = utils.strToLst(bin_np[i][0])
+                    # print('infoDict', infoDict)
 
                     if previous_match != infoDict['doc']:
                         # print (infoDict['doc'])
 
                         # match = {'match_bins': np.empty((0)),"match_name": infoDict['doc']}
                         previous_match = infoDict['doc']
-                        match = []
 
+                        # below two lines should be interchanged i think
+                        match = []
                         self.matches.append(match)
 
                     bin_tweets = []
@@ -165,7 +165,7 @@ class BinDataset(Dataset):
                     target = infoDict['corrected_tags']
                     event_type = infoDict['event_type']
                     event_id = infoDict['event_id']
-                    match_name= infoDict['doc']                           
+                    match_name= infoDict['doc']                          
 
 
                     # {'bin': infoDict['bin'],'targets': infoDict['corrected_tags'],'tweets':[],'timestamps':[],'tokens':""}
@@ -179,6 +179,7 @@ class BinDataset(Dataset):
                 tweet_text=utils.lstToString(utils.strToLst(bin_np[i][1])).split()
                 tweet,tweet_length=utils.prepare_sequence(tweet_text, self.word_to_ix,
                                        pad_length=self.pad_length)
+
                 bin_tweets.append(tweet)
                 bin_tweet_lengths.append(tweet_length)
                 bin_tweets_text.append(tweet_text)

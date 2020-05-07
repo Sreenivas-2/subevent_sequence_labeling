@@ -4,7 +4,7 @@ timestamp=`date "+%d.%m.%Y_%H.%M.%S"`
 output_dir='./logs/tweet_avg_chronological/'
 config_file='./configs/tweet_avg_chronological.txt'
 
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=0
 
 mkdir -p $output_dir
 #sudo touch ${output_dir}log.dev_${timestamp}.txt

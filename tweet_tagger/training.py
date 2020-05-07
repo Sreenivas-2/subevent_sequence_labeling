@@ -26,6 +26,7 @@ class trainingUtils:
         epoch_loss = 0
 
         if self.config.ner_classes=="BIO":
+            # print(self.config.tag_to_ix.keys())
 
             self.tokenEvaluator = evaluators.nerTokenEvaluator(list(self.config.tag_to_ix.keys()))
 
@@ -66,7 +67,6 @@ class trainingUtils:
         return self.targets
         
     def predict(self,ec_independent_targets,ec_independent_event_ids,bio_targets):
-    
         if self.config.ner_classes == "EVENT_independent":
                 if self.config.threshold != 0:
                     predicted_labels = utils.thresholdedEventPredictions(self.config.threshold, self.tag_scores)
@@ -76,9 +76,11 @@ class trainingUtils:
                                                ec_independent_event_ids)
         elif self.config.ner_classes == "BIO" or self.config.ner_classes=="EC_duration":
                 predicted_scores, predicted_labels = torch.max(self.tag_scores, dim=1)
+                print('predicted_labels', predicted_labels)
                 self.tokenEvaluator.add(predicted_labels, self.targets)
-
+                # print('a')
                 self.relaxedEvaluator.add(predicted_labels, self.targets,bio_targets)
+                # print('b')
                 
           
     def printInfo(self,relaxedEventEvaluatorDev=""):
