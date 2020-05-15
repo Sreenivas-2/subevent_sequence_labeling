@@ -37,7 +37,7 @@ Sample Input
 12:02	"['dhoni', 'dhoni', 'won', 'for', 'team']"
 
 ```
-Here input has two columns time and tweet separated with '\t'. As the above sample input it should be divided into bins and accordingly the first row has the ground truth values.
+Here input has two columns time and tweet separated with '\t'. As shown above(sample input) it should be divided into bins accordingly.
 
 ## Notes
 
