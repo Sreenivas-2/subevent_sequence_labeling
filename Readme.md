@@ -1,11 +1,5 @@
-(1) tweet_tager is our model
 
-(2) DATA_EXTRACTION : this contains all the data and codes for extracting the data
-
-
----- MODEL :
-
-		# Sub-event detection from twitter streams as a sequence labeling problem
+# Sub-event detection from twitter streams as a sequence labeling problem
 
 
 		Implementation of our paper
@@ -36,12 +30,10 @@
 		Please cite our work when using this software.
 
 		Giannis Bekoulis, Johannes Deleu, Thomas Demeester, Chris Develder. Sub-event detection from twitter streams as a sequence labeling problem, In the Proceedings of the 2019 Annual Conference of the North American Chapter of the Association for Computational Linguistics, 2019
+	
+(1) tweet_tager is our model
 
-
-
-
-
----------------------------------------------------------------------------------------------------------------------------------------------------------
+(2) DATA_EXTRACTION : this contains all the data and codes for extracting the data
 
 		============================================  ROAD MAP  ===================================================
 
