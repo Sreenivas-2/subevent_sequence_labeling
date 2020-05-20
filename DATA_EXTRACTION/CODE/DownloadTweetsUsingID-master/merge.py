@@ -1,0 +1,28 @@
+import pandas as pd
+
+df1 = pd.read_csv('/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/DATA/DownloadTweetsUsingID-master/DATA/final1.csv')
+df2 = pd.read_csv('/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/DATA/CrisisNLP_volunteers_labeled_data/CrisisNLP_volunteers_labeled_data/2015_Nepal_Earthquake_en/final2.csv')
+df2['event'] = 'NepalEQ'
+df2 = df2[['tweet_id', 'tweet_time', 'tweet_text', 'event', 'label']]
+df1 = pd.concat([df1, df2], ignore_index=True)
+# df3 = pd.read_csv('/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/DATA/DownloadTweetsUsingID-master/DATA/out_infrastructure_id_20150427.csv')
+# df1 = pd.concat([df1, df3], ignore_index=True)
+# df4 = pd.read_csv('/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/DATA/DownloadTweetsUsingID-master/DATA/out_missing_id_20150425.csv')
+# df1 = pd.concat([df1, df4], ignore_index=True)
+# df5 = pd.read_csv('/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/DATA/DownloadTweetsUsingID-master/DATA/out_missing_id_20150426.csv')
+# df1 = pd.concat([df1, df5], ignore_index=True)
+# df6 = pd.read_csv('/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/DATA/DownloadTweetsUsingID-master/DATA/out_missing_id_20150427.csv')
+# df1 = pd.concat([df1, df6], ignore_index=True)
+# df7 = pd.read_csv('/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/DATA/DownloadTweetsUsingID-master/DATA/out_shelter_id_20150425.csv')
+# df1 = pd.concat([df1, df7], ignore_index=True)
+# df8 = pd.read_csv('/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/DATA/DownloadTweetsUsingID-master/DATA/out_shelter_id_20150426.csv')
+# df1 = pd.concat([df1, df8], ignore_index=True)
+# df9 = pd.read_csv('/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/DATA/DownloadTweetsUsingID-master/DATA/out_shelter_id_20150427.csv')
+# df1 = pd.concat([df1, df9], ignore_index=True)
+# df10 = pd.read_csv('/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/DATA/DownloadTweetsUsingID-master/DATA/out_volunteer_id_20150425.csv')
+# df1 = pd.concat([df1, df10], ignore_index=True)
+# df11 = pd.read_csv('/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/DATA/DownloadTweetsUsingID-master/DATA/out_volunteer_id_20150426.csv')
+# df1 = pd.concat([df1, df11], ignore_index=True)
+# df12 = pd.read_csv('/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/DATA/DownloadTweetsUsingID-master/DATA/out_volunteer_id_20150427.csv')
+# df1 = pd.concat([df1, df12], ignore_index=True)
+df1.to_csv('/home/sai/Documents/MINI_PROJECT/SUB-EVENT-DETECTION/DATA/DownloadTweetsUsingID-master/DATA/final.csv', index = False)
